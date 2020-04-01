@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Todoui from './components/TodoUI';
+import Addtodo from './components/Addtodo'
 
-function App() {
+
+class App extends Component {
+  state = {
+    Todo : [
+      {id: 1 , content : "Buy Something"},
+      {id: 2 , content : "DO Something"},
+    ]
+  }
+  handledelete=(id)=>{
+    //console.log(id);
+    let newTodo = this.state.Todo.filter(Todoui=>{
+      return Todoui.id !== id;
+
+    });
+    this.setState({
+      Todo : newTodo
+    });
+}
+addtodo=(todo)=>{
+  todo.id = Math.random();
+  let newTodo = [...this.state.Todo,todo]; // todo are the new states we have added
+  this.setState({
+    Todo :newTodo
+  });
+
+}
+
+  render(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="todo-app container">
+    <h1 className="center black-text bold-text"> TODO LISTS </h1>
+    
+    
+    <Todoui Todo = {this.state.Todo} handledelete ={this.handledelete} />
+    <Addtodo  addtodo = {this.addtodo}/>
+    
+    
+      
     </div>
   );
 }
-
+}
 export default App;
